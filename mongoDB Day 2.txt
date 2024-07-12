@@ -1,0 +1,212 @@
+Sample Documents in JSON Format;
+------------------------------------
+
+
+1. Users Collection;
+<---------------------->
+
+[
+    {
+        "_id": "user1",
+        "name": "John Doe",
+        "email": "john@example.com",
+        "student_id": "S001",
+        "mentor_id": "mentor1"
+    },
+    {
+        "_id": "user2",
+        "name": "Jane Roe",
+        "email": "jane@example.com",
+        "student_id": "S002",
+        "mentor_id": "mentor1"
+    }
+]
+
+2. CodeKata Collection;
+<---------------------->
+
+[
+    {
+        "_id": "codekata1",
+        "user_id": "user1",
+        "problems_solved": 120
+    },
+    {
+        "_id": "codekata2",
+        "user_id": "user2",
+        "problems_solved": 95
+    }
+]
+
+
+3. Attendance Collection;
+<---------------------->
+
+[
+    {
+        "_id": "attendance1",
+        "user_id": "user1",
+        "date": "2020-10-20",
+        "status": "Absent"
+    },
+    {
+        "_id": "attendance2",
+        "user_id": "user2",
+        "date": "2020-10-21",
+        "status": "Present"
+    }
+]
+
+
+4. Topics Collection;
+<---------------------->
+
+
+[
+    {
+        "_id": "topic1",
+        "topic_name": "MongoDB Basics",
+        "date": "2020-10-10"
+    },
+    {
+        "_id": "topic2",
+        "topic_name": "Advanced MongoDB",
+        "date": "2020-10-15"
+    }
+]
+
+5. Tasks Collection;
+<---------------------->
+
+
+[
+    {
+        "_id": "task1",
+        "task_name": "Database Design",
+        "date": "2020-10-12",
+        "submitted": false
+    },
+    {
+        "_id": "task2",
+        "task_name": "Query Optimization",
+        "date": "2020-10-18",
+        "submitted": true
+    }
+]
+
+
+6. Company Drives Collection;
+<---------------------------->
+
+
+[
+    {
+        "_id": "drive1",
+        "company_name": "Tech Corp",
+        "date": "2020-10-25",
+        "students_attended": ["user1", "user2"]
+    },
+    {
+        "_id": "drive2",
+        "company_name": "Innovatech",
+        "date": "2020-10-28",
+        "students_attended": ["user2"]
+    }
+]
+
+
+7. Mentors Collection;
+<---------------------->
+
+[
+    {
+        "_id": "mentor1",
+        "name": "Jane Smith",
+        "mentees": ["user1", "user2"]
+    },
+    {
+        "_id": "mentor2",
+        "name": "Robert Brown",
+        "mentees": ["user3", "user4"]
+    }
+]
+
+------------------------------------------------------------------------------------------------
+
+
+* SIMPLIFIED QUERIES;
+<---------------------->
+
+1. Find all the topics and tasks which are taught in the month of October:
+
+
+{ "date": { "$gte": "2020-10-01", "$lte": "2020-10-31" } }
+
+
+**Tasks Collection:
+
+{ "date": { "$gte": "2020-10-01", "$lte": "2020-10-31" } }
+
+
+------------------------------------------------------------------------------------------------
+
+
+
+2. Find all the company drives which appeared between 15 Oct 2020 and 31 Oct 2020:
+
+
+{ "date": { "$gte": "2020-10-15", "$lte": "2020-10-31" } }
+
+------------------------------------------------------------------------------------------------
+
+
+3. Find all the company drives and students who appeared for the placement:
+
+
+[
+    {
+        "$lookup": {
+            "from": "users",
+            "localField": "students_attended",
+            "foreignField": "_id",
+            "as": "students"
+        }
+    }
+]
+
+
+------------------------------------------------------------------------------------------------
+
+
+4. Find the number of problems solved by the user in CodeKata:
+
+
+{ "_id": "user1" }, { "_id": "user2" }
+
+------------------------------------------------------------------------------------------------
+
+5. Find all the mentors with mentees count more than 15:
+
+
+{ "$where": "this.mentees.length > 15" }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
